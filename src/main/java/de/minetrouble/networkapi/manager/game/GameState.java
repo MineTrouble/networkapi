@@ -1,4 +1,4 @@
-package de.minetrouble.networkapi.manager.gamestate;
+package de.minetrouble.networkapi.manager.game;
 
 /**
  * @author KeinByte

@@ -2,6 +2,8 @@ name: NetworkApi
 version: 1.0
 author: KeinByte
 main: de.minetrouble.networkapi.NetworkApi
+depend:
+  - LuckPerms
 
 commands:
   test:

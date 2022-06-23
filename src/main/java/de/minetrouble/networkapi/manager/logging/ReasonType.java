@@ -8,6 +8,11 @@ public enum ReasonType {
 
     ADD_COINS,
     SET_COINS,
-    REMOVE_COINS;
+    REMOVE_COINS,
+
+    SURVIVAL,
+    ADVENTURE,
+    CREATIVE,
+    SPECTATOR;
 
 }

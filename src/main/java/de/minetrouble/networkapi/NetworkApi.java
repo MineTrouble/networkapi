@@ -1,8 +1,9 @@
 package de.minetrouble.networkapi;
 
 import de.dytanic.cloudnet.driver.service.ServiceId;
-import de.minetrouble.networkapi.apicommand.MineApiCommand;
+import de.minetrouble.networkapi.command.apicommand.MineApiCommand;
 import de.minetrouble.networkapi.listener.PlayerJoinListener;
+import de.minetrouble.networkapi.manager.cloudnet.ServicePlayerCounting;
 import de.minetrouble.networkapi.manager.command.AbstractCommand;
 import de.minetrouble.networkapi.manager.database.MySQLDatabaseEntry;
 import de.minetrouble.networkapi.manager.player.NetworkPlayer;
@@ -22,6 +23,7 @@ public class NetworkApi extends JavaPlugin {
     @Getter private NetworkPlayer networkPlayer;
     @Getter private NetworkPlayerCache networkPlayerCache;
     @Getter private ServiceId serviceId;
+    @Getter private ServicePlayerCounting servicePlayerCounting;
 
     @Override
     public void onLoad() {
@@ -30,6 +32,7 @@ public class NetworkApi extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        registerConfig();
         registerDatabase();
         registerCommand();
         getCommand("test").setExecutor(this);
@@ -45,6 +48,12 @@ public class NetworkApi extends JavaPlugin {
     private void registerDatabase(){
         this.mySQLDatabaseEntry = new MySQLDatabaseEntry();
         this.mySQLDatabaseEntry.create();
+    }
+
+    private void registerConfig(){
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        reloadConfig();
     }
 
 }

@@ -78,6 +78,7 @@ public class NetworkPlayer {
         return firstJoin;
     }
 
+
     public long getLastJoin() {
         return lastJoin;
     }

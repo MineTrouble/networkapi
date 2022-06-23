@@ -1,4 +1,4 @@
-package de.minetrouble.networkapi.apicommand;
+package de.minetrouble.networkapi.command.apicommand;
 
 import de.dytanic.cloudnet.driver.service.ServiceId;
 import de.minetrouble.networkapi.NetworkApi;
@@ -130,3 +130,15 @@ public class MineApiCommand extends AbstractCommand {
         return false;
     }
 }
+/**
+ * mineapi addcoins <Player> <Coins>
+ * mineapi setcoins <Player> <Coins>
+ * mineapi removecoins <Player> <Coins>
+ *
+ * mineapi playerinfo <Name>
+ *
+ * mineapi addrank <Player> <Rank>
+ * mineapi setrank <Player> <Rank>
+ * mineapi removerank <Player> <Rank>
+ *
+ */

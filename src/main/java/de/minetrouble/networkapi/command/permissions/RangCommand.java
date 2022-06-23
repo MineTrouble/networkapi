@@ -13,7 +13,7 @@ import java.util.List;
  * @since 22.06.2022
  */
 public class RangCommand extends AbstractCommand {
-
+//
     public RangCommand(String command, String permission, String description, String usage, boolean active, List<String> alias) {
         super(command, permission, description, usage, active, alias);
     }

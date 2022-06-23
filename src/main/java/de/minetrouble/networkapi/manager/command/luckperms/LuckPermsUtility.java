@@ -25,6 +25,7 @@ public class LuckPermsUtility {
     }
 
     public static List<Group> getUserGroups(User user){
+
         List<Group> groups = Lists.newArrayList();
         List<Node> nodes = (List<Node>)user.data().toCollection().stream()
                 .filter(node -> node.getKey().toLowerCase().startsWith("group.")).collect(Collectors.toList());

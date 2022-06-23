@@ -68,6 +68,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabExecutor {
         return this.getCommandMap();
     }
 
+
     public abstract boolean onCommand(CommandSender commandSender, Command command, String label, String[] strings);
 
     public List<String> onTabComplete(CommandSender commandSender, Command command, String label, String[] strings){

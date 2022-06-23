@@ -2,6 +2,7 @@ package de.minetrouble.networkapi.listener;
 
 import de.minetrouble.networkapi.NetworkApi;
 import de.minetrouble.networkapi.manager.player.NetworkPlayer;
+import de.minetrouble.networkapi.manager.prefix.Prefix;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +23,7 @@ public class PlayerJoinListener implements Listener {
         if (!networkPlayer.existsPlayer(player.getUniqueId())){
            new NetworkPlayer(player.getUniqueId(), System.currentTimeMillis(), 0, 0);
         }
+        new Prefix(player);
     }
 
 }

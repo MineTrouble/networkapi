@@ -15,6 +15,7 @@ public class ServicePlayerCounting {
         for (ServiceInfoSnapshot serviceInfoSnapshot : CloudNetDriver.getInstance().getCloudServiceProvider().getCloudServices(cloudService)){
             players += serviceInfoSnapshot.getProperty(BridgeServiceProperty.ONLINE_COUNT).orElse(0);
         }
+
         return players;
     }
 

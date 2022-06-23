@@ -10,6 +10,7 @@ import java.util.UUID;
  */
 public class NetworkLog {
 
+
     public static void create(UUID uuidTeam, UUID uuidPlayer, LogType logType, long amount, ReasonType reason, long time){
         NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getLogCollection()
                 .insert()
