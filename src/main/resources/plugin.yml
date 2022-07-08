@@ -6,4 +6,5 @@ depend:
   - LuckPerms
 
 commands:
-  test:
+  staffrequest:
+  networkplayer:

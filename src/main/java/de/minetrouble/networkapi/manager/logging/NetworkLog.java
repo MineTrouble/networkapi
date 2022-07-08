@@ -23,4 +23,40 @@ public class NetworkLog {
                 .execute();
     }
 
+    public static void create(UUID uuidTeam, UUID uuidPlayer, LogType logType, long amount, String reason, long time){
+        NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getLogCollection()
+                .insert()
+                .set("uuidTeam", uuidTeam)
+                .set("uuidPlayer", uuidPlayer)
+                .set("type", logType)
+                .set("amount", amount)
+                .set("reason", reason)
+                .set("time", time)
+                .execute();
+    }
+
+    public static void create(UUID uuidTeam, UUID uuidPlayer, String logType, long amount, ReasonType reason, long time){
+        NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getLogCollection()
+                .insert()
+                .set("uuidTeam", uuidTeam)
+                .set("uuidPlayer", uuidPlayer)
+                .set("type", logType)
+                .set("amount", amount)
+                .set("reason", reason)
+                .set("time", time)
+                .execute();
+    }
+
+    public static void create(UUID uuidTeam, UUID uuidPlayer, String logType, long amount, String reason, long time){
+        NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getLogCollection()
+                .insert()
+                .set("uuidTeam", uuidTeam)
+                .set("uuidPlayer", uuidPlayer)
+                .set("type", logType)
+                .set("amount", amount)
+                .set("reason", reason)
+                .set("time", time)
+                .execute();
+    }
+
 }

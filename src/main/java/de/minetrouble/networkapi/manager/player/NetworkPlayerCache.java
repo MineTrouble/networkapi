@@ -60,7 +60,7 @@ public class NetworkPlayerCache {
                 .execute();
     }
 
-    
+
     public NetworkPlayer getPlayerByUuid(UUID uuid){
         return networkPlayerCache.get("byUUID", uuid);
     }

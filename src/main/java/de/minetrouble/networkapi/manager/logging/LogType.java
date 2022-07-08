@@ -7,6 +7,7 @@ package de.minetrouble.networkapi.manager.logging;
 public enum LogType {
 
     COINS,
-    GAME_MODE_CHANGE;
+    GAME_MODE_CHANGE,
+    CASE_OPENING;
 
 }

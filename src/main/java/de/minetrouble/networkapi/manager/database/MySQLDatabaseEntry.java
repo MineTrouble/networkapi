@@ -26,6 +26,7 @@ public class MySQLDatabaseEntry {
     @Getter private DatabaseCollection playerCollection;
     @Getter private DatabaseCollection logCollection;
     @Getter private DatabaseCollection statsCollection;
+    @Getter private DatabaseCollection caseCollection;
 
     public void create(){
         databaseDriver = DatabaseDriverFactory.create("network_api", new SQLDatabaseDriverConfigBuilder()
@@ -40,6 +41,7 @@ public class MySQLDatabaseEntry {
         createPlayerCollection();
         createLogCollection();
         createStatsCollection();
+        createCaseCollection();
     }
 
     public void delete(){
@@ -83,6 +85,16 @@ public class MySQLDatabaseEntry {
                 .field("looses", DataType.INTEGER)
                 .field("played", DataType.INTEGER)
                 .field("points", DataType.INTEGER)
+                .create();
+    }
+
+    public void createCaseCollection(){
+        caseCollection = database.createCollection("network_case")
+                .field("id", DataType.INTEGER, FieldOption.PRIMARY_KEY, FieldOption.AUTO_INCREMENT)
+                .field("uuid", DataType.UUID)
+                .field("caseLite", DataType.LONG)
+                .field("caseMiddle", DataType.LONG)
+                .field("caseExtreme", DataType.LONG)
                 .create();
     }
 
