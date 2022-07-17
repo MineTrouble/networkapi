@@ -40,35 +40,35 @@ public class NetworkPlayer {
                 .isEmpty();
     }
 
-    public long getCoins() {
-        long coins = 0;
-        try {
-            ResultSet resultSet = NetworkApi.getNetworkApi().getMySQLEntry().getResult("SELECT * FROM network_player WHERE uuid = '" + uuid + "'");
-            if (!resultSet.next() || Long.valueOf(resultSet.getLong("coins")) == null) ;
-            coins = Long.valueOf(resultSet.getLong("coins"));
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
+    /*public long getCoins() {
         return coins;
     }
 
     /**
      * Coins
-     */
+
     public void setCoins(long coins) {
         this.coins = coins;
-        NetworkApi.getNetworkApi().getMySQLEntry().update("UPDATE network_player SET coins = '" + coins + "' WHERE uuid = '" + uuid + "';");
+        NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getPlayerCollection()
+                .update()
+                .set("coins", coins)
+                .where("uuid", uuid)
+                .executeAsync();
     }
 
     public void addCoins(long coins) {
-        this.coins = coins;
-        setCoins(getCoins() + coins);
+        NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getPlayerCollection()
+                .update()
+                .set("coins", coins)
+                .where("uuid", uuid)
+                .executeAsync();
+
     }
 
     public void removeCoins(long coins) {
         this.coins = coins;
         setCoins(getCoins() - coins);
-    }
+    }**/
 
     /**
      * FirstJoin
@@ -80,6 +80,34 @@ public class NetworkPlayer {
 
     public long getLastJoin() {
         return lastJoin;
+    }
+
+    public void setLastJoin(long lastJoin) {
+        this.lastJoin = lastJoin;
+        NetworkApi.getNetworkApi().getMySQLDatabaseEntry().getPlayerCollection()
+                .update()
+                .set("lastJoin", lastJoin)
+                .where("uuid", uuid)
+                .executeAsync();
+    }
+
+    public long getCoins(){
+        return NetworkApi.getNetworkApi().getMySQLEntry().getKeyAsLong("network_player", "uuid", uuid.toString(), "coins");
+    }
+
+    public void setCoins(long coins){
+        this.coins = coins;
+        NetworkApi.getNetworkApi().getMySQLEntry().update("UPDATE network_player SET coins='" + coins + "' WHERE uuid='" + uuid + "'");
+    }
+
+    public void addCoins(long coins){
+        this.coins = coins;
+        NetworkApi.getNetworkApi().getMySQLEntry().update("UPDATE network_player SET coins='" + (getCoins() + coins) + "' WHERE uuid='" + uuid + "'");
+    }
+
+    public void removeCoins(long coins){
+        this.coins = coins;
+        NetworkApi.getNetworkApi().getMySQLEntry().update("UPDATE network_player SET coins='" + (getCoins() - coins) + "' WHERE uuid='" + uuid + "'");
     }
 
 }

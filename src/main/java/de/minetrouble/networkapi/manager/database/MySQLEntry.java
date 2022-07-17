@@ -2,10 +2,7 @@ package de.minetrouble.networkapi.manager.database;
 
 import de.minetrouble.networkapi.NetworkApi;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * @author KeinByte
@@ -82,6 +79,21 @@ public class MySQLEntry {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public long getKeyAsLong(String table, String whereKey, String setWhereKey, String getKey) {
+        long value = 0L;
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `" + table + "` WHERE `" + whereKey + "` = ?")) {
+            preparedStatement.setString(1, setWhereKey);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+                value = resultSet.getLong(getKey);
+            preparedStatement.close();
+            resultSet.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return value;
     }
 
 }

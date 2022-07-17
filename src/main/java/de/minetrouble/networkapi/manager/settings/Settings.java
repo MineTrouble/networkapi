@@ -1,9 +1,6 @@
 package de.minetrouble.networkapi.manager.settings;
 
-import de.minetrouble.networkapi.NetworkApi;
-import de.minetrouble.networkapi.manager.ItemBuilder;
-import de.minetrouble.networkapi.manager.customevents.PlayerSettingsChangeEvent;
-import org.bukkit.Bukkit;
+import de.minetrouble.networkapi.manager.item.ItemBuilder;
 import org.bukkit.entity.Player;
 
 /**

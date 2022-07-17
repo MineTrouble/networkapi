@@ -1,56 +1,44 @@
 package de.minetrouble.networkapi.manager.prefix;
 
-import net.luckperms.api.LuckPerms;
+import de.minetrouble.networkapi.manager.command.luckperms.LuckPermsUtility;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
+import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
-import net.luckperms.api.query.QueryOptions;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.List;
+
 /**
  * @author KeinByte
- * @since 23.06.2022
+ * @since 15.07.2022
  */
-public class Prefix {
+public class Prefix implements IPrefix{
 
-    private LuckPerms luckPerms = LuckPermsProvider.get();
-
-    public Prefix(Player player) {
-        setScoreboard(player);
+    private Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+    @Override
+    public void applyPrefix(Player player) {
+        User user = LuckPermsUtility.getLuckPermsUser(player.getUniqueId());
+        Group group = LuckPermsProvider.get().getGroupManager().getGroup(user.getPrimaryGroup());
+        String id = ((List<String>)group.getCachedData().getMetaData().getMeta().get("team")).get(0);
+        Team team = (this.scoreboard.getTeam(id + group.getName()) != null) ? this.scoreboard.getTeam(id + group.getName()) : this.scoreboard.registerNewTeam(id + group.getName());
+        team.setPrefix(ChatColor.translateAlternateColorCodes('&', getPlayerPrefix(player)));
+        if (user.getCachedData().getMetaData().getSuffix() != null)
+            team.setSuffix(ChatColor.translateAlternateColorCodes('&', user.getCachedData().getMetaData().getSuffix()));
+        team.addEntry(player.getName());
+        player.setDisplayName(ChatColor.translateAlternateColorCodes('&', ((List<String>)user.getCachedData().getMetaData().getMeta().get("display")).get(0)) + player.getName());
+        for (Player all : Bukkit.getOnlinePlayers())
+            all.setScoreboard(this.scoreboard);
     }
 
-    public String getPrefix(Player player) {
-        User user = this.luckPerms.getUserManager().getUser(player.getUniqueId());
-        QueryOptions queryOptions = this.luckPerms.getContextManager().getStaticQueryOptions();
-        CachedMetaData cachedMetaData = user.getCachedData().getMetaData(queryOptions);
-        String prefix = cachedMetaData.getPrefix().replaceAll("&", "§");
-        return prefix;
-    }
-
-    public String getTeam(Player player) {
-        User user = this.luckPerms.getUserManager().getUser(player.getUniqueId());
-        QueryOptions queryOptions = this.luckPerms.getContextManager().getStaticQueryOptions();
-        CachedMetaData cachedMetaData = user.getCachedData().getMetaData(queryOptions);
-        String team = cachedMetaData.getMetaValue("team");
-        return team;
-    }
-
-    public void setScoreboard(Player player) {
-        for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
-            String teamString = getTeam(onlinePlayers);
-            for (Player players : Bukkit.getOnlinePlayers()) {
-                Scoreboard scoreboard = players.getScoreboard();
-                Team team = (scoreboard.getTeam(teamString) == null) ? scoreboard.registerNewTeam(teamString) : scoreboard.getTeam(teamString);
-                team.setPrefix(getPrefix(onlinePlayers));
-                team.addEntry(onlinePlayers.getName());
-                players.setScoreboard(scoreboard);
-            }
-        }
-        String prefix = getPrefix(player);
-        player.setDisplayName(prefix + player.getName());
-        player.setPlayerListName(prefix + player.getName());
+    @Override
+    public String getPlayerPrefix(Player player) {
+        User user = LuckPermsUtility.getLuckPermsUser(player.getUniqueId());
+        CachedMetaData cachedMetaData = user.getCachedData().getMetaData();
+        return ChatColor.translateAlternateColorCodes('&', cachedMetaData.getPrefix());
     }
 }
