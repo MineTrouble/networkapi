@@ -18,7 +18,7 @@ import java.util.Collection;
  */
 public class BookFactory {
 
-    /*@Deprecated
+    @Deprecated
     protected static void openBook(Player player, ItemStack bookItem){
         ItemStack itemInHand = player.getItemInHand();
         try {
@@ -68,6 +68,6 @@ public class BookFactory {
 
             return null;
         }
-    }*/
+    }
 
 }
